@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+
+    body{
+        text-align: center;
+    }
+
+    body{
+        background: blueviolet;
+        columns: white;
+        font-family: monospace;
+        font-weight: 50;
+        font-size: 30px;
+    }
+
+    .control{
+        margin-bottom: 50px;
+    }
+
+    .spacing,.blur{
+        margin-bottom: 15px;
+    }
+
+    
+    /* Before we work on CSS with JS, we must be
+    declared CSS on root */
+
+    :root{
+        --base: #ffc600;
+        --spacing: 10px;
+        --blur: 10px;
+    }
+    /*using the decalred CSS by using variales on it*/
+    img{
+        padding: var(--spacing);
+        background: var(--base);
+        filter: blur(var(--blur));
+    }
+
+    .hl{
+        color: var(--base);
+    }
+
+   /*Note the data-sizing in markup is for the output in JS to be in px not just number*/
+</style>
+<body>
+    <h1>Update CSS Variable with <span class="hl">JS</span></h1>
+    <div class="controls">
+
+        <div class="spacing">
+            <label for="spacing">Spacing</label>
+            <input type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+        </div>
+
+        <div class="blur">
+        <label for="blur">Blur</label>
+        <input type="range" name="blur" min="0" max="10" value="5" data-sizing="px">
+        </div>
+        
+        <div class="base">
+            <label for="base">Base Color</label>
+            <input type="color" name="base" min="0"  value="#ffc600">
+        </div>
+
+       
+    </div>
+
+    <div class="image">
+        <img src="/image/larm-rmah-AEaTUnvneik-unsplash.jpg" alt="">
+    </div>
+
+    <script>
+        // We grab all inputs
+        const inputs = document.querySelectorAll('.controls input');
+
+
+        function Update() {
+            /*Firstly, we get the data-sizing in PX to ba a varable.
+            To check console.log(suffix), then drag the input in browser*/
+
+            const suffix = this.dataset.sizing || ''; 
+
+            /*Secondly, we update the input-varable in px. 
+            We will select all the CSS varable ( Base, Space and Blur) in root and set the property. 
+            To check for names in input...  console.log(this.name) */
+
+           document.documentElement.style.setProperty(`--${this.name}`,this.value + suffix)
+        }
+
+        //We listen to change of event and mousemove on input by......
+        inputs.forEach(input => input.addEventListener('change', Update));
+        inputs.forEach(input => input.addEventListener('mousemove', Update));
+    </script>
+</body>
+</html>
